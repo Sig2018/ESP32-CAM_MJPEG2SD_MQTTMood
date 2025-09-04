@@ -361,13 +361,13 @@
 #define HREF_GPIO_NUM 7
 #define PCLK_GPIO_NUM 13
 
-#if defined(CAMERA_MODEL_FREENOVE_ESP32S3_CAM) || defined(CAMERA_MODEL_ESP32_S3_CAM)
+//#if defined(CAMERA_MODEL_FREENOVE_ESP32S3_CAM) || defined(CAMERA_MODEL_ESP32_S3_CAM)
 #define USE_WS2812 // Use WS2812 rgb led
-#endif
+//#endif
 #ifdef USE_WS2812
 #define LED_GPIO_NUM 48 // WS2812 rgb led
 #else
-#define LED_GPIO_NUM 2 // blue signal led    
+#define LED_GPIO_NUM 47 // blue signal led    
 #endif
 
 // Define SD Pins
