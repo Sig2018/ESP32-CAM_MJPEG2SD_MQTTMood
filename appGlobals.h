@@ -28,12 +28,12 @@
 
 // User's ESP32S3 cam board
 #elif defined(CONFIG_IDF_TARGET_ESP32S3)
-#define CAMERA_MODEL_FREENOVE_ESP32S3_CAM
+//#define CAMERA_MODEL_FREENOVE_ESP32S3_CAM
 //#define CAMERA_MODEL_ESP32_S3_CAM
 //#define CAMERA_MODEL_XIAO_ESP32S3
 //#define CAMERA_MODEL_NEW_ESPS3_RE1_0
 //#define CAMERA_MODEL_M5STACK_CAMS3_UNIT
-//#define CAMERA_MODEL_ESP32S3_EYE 
+#define CAMERA_MODEL_ESP32S3_EYE 
 //#define CAMERA_MODEL_ESP32S3_CAM_LCD
 //#define CAMERA_MODEL_DFRobot_FireBeetle2_ESP32S3
 //#define CAMERA_MODEL_DFRobot_Romeo_ESP32S3
@@ -57,13 +57,13 @@
   Optional features NOT included by default to reduce heap use 
   To include a particular feature, change false to true
 ***************************************************************/
-#define INCLUDE_FTP_HFS false // ftp.cpp (file upload)
+#define INCLUDE_FTP_HFS true // ftp.cpp (file upload)
 #define INCLUDE_TGRAM false   // telegram.cpp (Telegram app interface)
 #define INCLUDE_AUDIO false   // audio.cpp (microphones & speakers)
-#define INCLUDE_PERIPH false  // peripherals.cpp (servos, PIR, led etc)
+#define INCLUDE_PERIPH true  // peripherals.cpp (servos, PIR, led etc)
 #define INCLUDE_SMTP false    // smtp.cpp (email)
-#define INCLUDE_MQTT false    // mqtt.cpp (MQTT)
-#define INCLUDE_HASIO false   // mqtt.cpp (Send home assistant discovery messages). Needs INCLUDE_MQTT true
+#define INCLUDE_MQTT true    // mqtt.cpp (MQTT)
+#define INCLUDE_HASIO true   // mqtt.cpp (Send home assistant discovery messages). Needs INCLUDE_MQTT true
 
 #define INCLUDE_CERTS false   // certificates.cpp (https and server certificate checking)
 #define INCLUDE_UART false    // uart.cpp (use another esp32 as Auxiliary connected via UART)

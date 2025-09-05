@@ -159,6 +159,9 @@ void checkForRemoteQuery() {
           else if (!strcmp(query, "framesize"))  setFPSlookup(fsizePtr);
 #endif
           updateStatus(query, value);
+          if (!strcmp(query, "pirUse")) { // Publish updated pirUse state
+            mqttPublishPath("pirUse", pirUse ? "on" : "off");
+          } 
         }          
       } else { //No params command
         LOG_VRB("Execute cmd: %s", query);
@@ -375,6 +378,7 @@ void sendMqttHasDiscovery(){
   //Home Asssistant Buttons
   sendHasEntities ("led", "Camera led", "", "mdi:led-on", "", "", "lampLevel=15","lampLevel=0");
   sendHasEntities ("forceRecord", "Start Record", "", "mdi:video-check", "", "", "forceRecord=1","forceRecord=0");
+  sendHasEntities ("pirUse", "PIR Motion Detection", "", "mdi:motion-sensor", "", "", "pirUse=1", "pirUse=0");//NUevo boton para pir use
   //Home Asssistant Config Buttons
   sendHasEntities ("still", "Get Picture", "", "mdi:list-status", "config", "", "still");
   sendHasEntities ("state", "Get diagnostics", "", "mdi:list-status", "config", "", "state");
@@ -409,6 +413,7 @@ void sendMqttHasState(){
   mqttPublishPath("free_psram", p);
   sprintf(p, "%s", fmtSize(STORAGE.totalBytes() - STORAGE.usedBytes()) );
   mqttPublishPath("free_bytes", p);
+  mqttPublishPath("pirUse", pirUse ? "on" : "off"); // Publish PIR state
 }
 #endif
 #endif
