@@ -161,7 +161,9 @@ void checkForRemoteQuery() {
           updateStatus(query, value);
           if (!strcmp(query, "pirUse")) { // Publish updated pirUse state
             mqttPublishPath("pirUse", pirUse ? "on" : "off");
-          } 
+          } else if (!strcmp(query, "lampLevel")) { // Publish updated led state
+            mqttPublishPath("led", lampLevel ? "on" : "off");
+          }
         }          
       } else { //No params command
         LOG_VRB("Execute cmd: %s", query);
@@ -321,10 +323,12 @@ void sendHasEntities (const char *name, const char *displayName, const char *uni
     else
       p += sprintf(p, "\"stat_t\":\"%ssensor/%s/%s\",", mqtt_topic_prefix, hostName, name);  
   
-    if(strlen(payload_on) && strlen(payload_off) ){  
+    if(strlen(payload_on) && strlen(payload_off) ){
       p += sprintf(p, "\"pl_on\":\"%s\",", payload_on);
       p += sprintf(p, "\"pl_off\":\"%s\",", payload_off);
-      p += sprintf(p, "\"cmd_t\":\"%ssensor/%s/%s\",", mqtt_topic_prefix, hostName, "cmd");  
+      p += sprintf(p, "\"stat_on\":\"on\",");
+      p += sprintf(p, "\"stat_off\":\"off\",");
+      p += sprintf(p, "\"cmd_t\":\"%ssensor/%s/%s\",", mqtt_topic_prefix, hostName, "cmd");
     }else if(strlen(payload_on) && !strlen(payload_off) ){
       p += sprintf(p, "\"pl_prs\":\"%s\",", payload_on);
       p += sprintf(p, "\"cmd_t\":\"%ssensor/%s/%s\",", mqtt_topic_prefix, hostName, "cmd");  
@@ -377,7 +381,7 @@ void sendMqttHasDiscovery(){
   sendHasEntities ("free_bytes", "Free SD", "", "mdi:memory", "diagnostic", "free_bytes");
   //Home Asssistant Buttons
   sendHasEntities ("led", "Camera led", "", "mdi:led-on", "", "", "lampLevel=15","lampLevel=0");
-  sendHasEntities ("forceRecord", "Start Record", "", "mdi:video-check", "", "", "forceRecord=1","forceRecord=0");
+  sendHasEntities ("forceRecord", "Start Record", "", "mdi:video-check", "", "record", "forceRecord=1","forceRecord=0");
   sendHasEntities ("pirUse", "PIR Motion Detection", "", "mdi:motion-sensor", "", "", "pirUse=1", "pirUse=0");//NUevo boton para pir use
   //Home Asssistant Config Buttons
   sendHasEntities ("still", "Get Picture", "", "mdi:list-status", "config", "", "still");
