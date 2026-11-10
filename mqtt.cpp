@@ -245,7 +245,16 @@ void startMqttClient(void){
     LOG_VRB("MQTT already running.. Exiting");
     return;
   }
-    
+
+  if (mqtt_client != nullptr) {
+    // A client already exists (eg still reconnecting after a disconnect).
+    // esp-mqtt retries internally by default, so don't init a second
+    // client/task on top of it - that's what piles up clients during
+    // a flaky wifi/broker spell.
+    LOG_VRB("MQTT client already exists, letting it reconnect..");
+    return;
+  }
+
   if (!netIsConnected()) {
     mqttConnected = false;
     LOG_VRB("Wifi disconnected.. Retry mqtt on connect");
